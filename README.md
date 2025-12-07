@@ -1,12 +1,12 @@
-# The Brawl trading API guide
-Enabling algorithmic trading on The Brawl platform
+# trade'm client API guide
+Enabling algorithmic trading on the trade'm platform
 
 ## Exchange rates data
 In order to get the information about exchange rates, you need to integrate in your algorithm a data source like [CoinBase](https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs) or [CoinGecko](https://www.coingecko.com/api/documentation).
 
 ## Transaction request
 
-### POST http://platform.the-brawl.eu/api/transaction
+### POST http://platform.tradem.online/api/transaction
 #### Request body: {
 
 `sourceWalletId`: Source wallet ID available from the UI (see below)
@@ -27,7 +27,7 @@ In order to get the information about exchange rates, you need to integrate in y
 
 ## Wallet valuation request
 
-### GET http://platform.the-brawl.eu/api/account/:account_id/wallet/:wallet_id/valuation
+### GET http://platform.tradem.online/api/account/:account_id/wallet/:wallet_id/valuation
 #### Query parameters:
 
 `limit`: [*OPTIONAL*] Number of data points to return (to get the latest valuation just pass `?limit=1`, see the example code below)
@@ -53,7 +53,7 @@ In order to get the information about exchange rates, you need to integrate in y
 
 ## Examples
 ### Buying BTC for 10 USD
-POST http://platform.the-brawl.eu/api/transaction \
+POST http://platform.tradem.online/api/transaction \
 Request body: { \
 `sourceWalletId`: `<USD_wallet_ID>` \
 `destWalletId`: `<BTC_wallet_ID>` \
@@ -62,7 +62,7 @@ Request body: { \
 }
 
 ### Buying 5 BTC for USD
-POST http://platform.the-brawl.eu/api/transaction \
+POST http://platform.tradem.online/api/transaction \
 Request body: { \
 `sourceWalletId`: `<USD_wallet_ID>` \
 `destWalletId`: `<BTC_wallet_ID>` \
@@ -71,7 +71,7 @@ Request body: { \
 }
 
 ### Buying USD for 20 ETH
-POST http://platform.the-brawl.eu/api/transaction \
+POST http://platform.tradem.online/api/transaction \
 Request body: { \
 `sourceWalletId`: `<ETH_wallet_ID>` \
 `destWalletId`: `<USD_wallet_ID>` \
@@ -80,7 +80,7 @@ Request body: { \
 }
 
 ### Buying 15 USD for ETH
-POST http://platform.the-brawl.eu/api/transaction \
+POST http://platform.tradem.online/api/transaction \
 Request body: { \
 `sourceWalletId`: `<ETH_wallet_ID>` \
 `destWalletId`: `<USD_wallet_ID>` \
@@ -89,7 +89,7 @@ Request body: { \
 }
 
 ## Example code
-**In order to run the example code, you need to set the `THE_BRAWL_EMAIL` and `THE_BRAWL_PASSWORD` environment variables with your login credentials to The Brawl platform. You can see the `export THE_BRAWL_EMAIL=<your_email>` and `export THE_BRAWL_PASSWORD=<your_password>` commands in BASH.**
+**In order to run the example code, you need to set the `TRADEM_EMAIL` and `TRADEM_PASSWORD` environment variables with your login credentials to the trade'm platform. You can see the `export TRADEM_EMAIL=<your_email>` and `export TRADEM_PASSWORD=<your_password>` commands in BASH.**
 
 [example.py](example.py)
 ```python
@@ -98,15 +98,15 @@ import requests
 
 API_KEY = 'AIzaSyBOEvN4OzAePlFp1fSRKWJlioA9r2WPZHw'
 AUTH_URL = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword'
-TRANSACTION_URL = 'http://platform.the-brawl.eu/api/transaction'
+TRANSACTION_URL = 'http://platform.tradem.online/api/transaction'
 ACCOUNT_ID = 'f24802e6-e2a2-46ad-ba25-caf423b73c70'
 USD_WALLET_ID = '1d0e3ee6-1fac-4246-a869-9c383ae8fa9c'
 BTC_WALLET_ID = '030bcff8-1bde-4b89-b814-b9c75cfda896'
-VALUATION_URL = f'https://platform.the-brawl.eu/api/account/{ACCOUNT_ID}/wallet/{BTC_WALLET_ID}/valuation'
+VALUATION_URL = f'https://platform.tradem.online/api/account/{ACCOUNT_ID}/wallet/{BTC_WALLET_ID}/valuation'
 
 data = {
-    "email": environ['THE_BRAWL_EMAIL'],
-    "password": environ['THE_BRAWL_PASSWORD'],
+    "email": environ['TRADEM_EMAIL'],
+    "password": environ['TRADEM_PASSWORD'],
     "returnSecureToken": True,
 }
 res = requests.post(AUTH_URL, json=data, params={'key': API_KEY}).json()
